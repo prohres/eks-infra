@@ -1,4 +1,4 @@
-# Read by the lint job of ci-templates tf-plan.yml (tflint --recursive from the repo root)
+# Run from the repo root: tflint --init && tflint --recursive
 plugin "terraform" {
   enabled = true
   preset  = "recommended"
