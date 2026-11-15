@@ -1,6 +1,13 @@
 data "aws_iam_roles" "admin_sso" {
   name_regex  = var.admin_sso_role_regex
   path_prefix = "/aws-reserved/sso.amazonaws.com/"
+
+  lifecycle {
+    postcondition {
+      condition     = length(self.names) == 1
+      error_message = "Expected exactly one SSO role matching admin_sso_role_regex in account_id, found ${length(self.names)}."
+    }
+  }
 }
 
 module "eks" {
@@ -21,7 +28,7 @@ module "eks" {
   enable_cluster_creator_admin_permissions = false
   access_entries = {
     admin = {
-      # SSO role ARN without its path: arn:aws:iam::<account>:role/AWSReservedSSO_Admin_<hash>
+      # SSO role ARN without its path: arn:aws:iam::<account>:role/AWSReservedSSO_AdministratorAccess_<hash>
       principal_arn = "arn:aws:iam::${var.account_id}:role/${one(data.aws_iam_roles.admin_sso.names)}"
       policy_associations = {
         cluster_admin = {

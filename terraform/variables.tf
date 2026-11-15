@@ -33,5 +33,5 @@ variable "admin_cidrs" {
 variable "admin_sso_role_regex" {
   description = "Name pattern of the SSO role that gets cluster admin (Identity Center adds a hash suffix)"
   type        = string
-  default     = "^AWSReservedSSO_Admin_.*"
+  default     = "^AWSReservedSSO_AdministratorAccess_.*"
 }
