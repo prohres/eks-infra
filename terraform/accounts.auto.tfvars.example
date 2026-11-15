@@ -1,3 +1,4 @@
 # Copy to accounts.auto.tfvars (not in git); Terraform loads it automatically.
 account_id       = "<workload-account-id>"
 assume_role_name = "OrganizationAccountAccessRole"
+admin_cidrs      = ["<your-ip>/32"]
