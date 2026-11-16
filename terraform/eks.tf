@@ -28,8 +28,8 @@ module "eks" {
   enable_cluster_creator_admin_permissions = false
   access_entries = {
     admin = {
-      # SSO role ARN without its path: arn:aws:iam::<account>:role/AWSReservedSSO_AdministratorAccess_<hash>
-      principal_arn = "arn:aws:iam::${var.account_id}:role/${one(data.aws_iam_roles.admin_sso.names)}"
+      # Full SSO role ARN with its path (/aws-reserved/sso.amazonaws.com/); only aws-auth needs the path stripped
+      principal_arn = one(data.aws_iam_roles.admin_sso.arns)
       policy_associations = {
         cluster_admin = {
           policy_arn   = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
